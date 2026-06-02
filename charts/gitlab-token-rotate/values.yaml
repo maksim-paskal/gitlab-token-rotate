@@ -1,0 +1,7 @@
+env: []
+args: []
+
+image: paskalmaksim/gitlab-token-rotate:6d4d808
+imagePullPolicy: IfNotPresent
+
+tolerations: []

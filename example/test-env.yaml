@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: regcred-env
+  namespace: default
+  annotations:
+    gitlab-token-rotate/enabled: "true"
+    gitlab-token-rotate/gitlab-endpoint: https://gitlab/api/v4
+    gitlab-token-rotate/token: glpat-xxxxxxxxxxxxxxxxxxxx
+data:
+  GITLAB_TOKEN: test

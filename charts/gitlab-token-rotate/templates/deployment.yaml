@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gitlab-token-rotate
+  labels:
+    app: gitlab-token-rotate
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gitlab-token-rotate
+  template:
+    metadata:
+      labels:
+        app: gitlab-token-rotate
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/path: '/metrics'
+        prometheus.io/port: '8080'
+    spec:
+      serviceAccountName: gitlab-token-rotate
+      securityContext:
+        runAsUser: 32752
+        runAsGroup: 32752
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+{{ if .Values.tolerations }}
+      tolerations:
+{{ toYaml .Values.tolerations | indent 6 }}
+{{ end }}
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - gitlab-token-rotate
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - name: gitlab-token-rotate
+        image: {{ .Values.image }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+{{ if .Values.args }}
+        args:
+{{ toYaml .Values.args | indent 8 }}
+{{ end }}
+{{ if .Values.env }}
+        env:
+{{ toYaml .Values.env | indent 8 }}
+{{ end }}
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+        resources:
+          requests:
+            cpu: 100m
+            memory: 300Mi
+        ports:
+        - name: http
+          containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: http
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: http
+          initialDelaySeconds: 3
+          periodSeconds: 3
