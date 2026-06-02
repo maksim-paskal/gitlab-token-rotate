@@ -1,6 +1,4 @@
-# gitlab-token-rotate Helm Repository
-
-This is the Helm chart repository for [gitlab-token-rotate](https://github.com/maksim-paskal/gitlab-token-rotate).
+Helm chart repository for [gitlab-token-rotate](https://github.com/maksim-paskal/gitlab-token-rotate).
 
 ## Usage
 
