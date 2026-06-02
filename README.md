@@ -18,7 +18,7 @@ Two secret types are supported.
 
 ### `kubernetes.io/dockerconfigjson`
 
-Used for Docker registry pull secrets. The controller regenerates `.dockerconfigjson` with the new token after each rotation.
+Used for Docker registry pull secrets. After rotation the controller updates `.dockerconfigjson` with a new Docker auth entry containing the rotated token.
 
 ```yaml
 apiVersion: v1
@@ -40,7 +40,7 @@ data:
 
 ### `Opaque`
 
-Used for secrets that expose a token as an environment variable. After rotation the controller deletes pods that mount or reference the secret so they restart with the new value.
+Used for secrets that expose a token as an environment variable. After rotation the controller updates `GITLAB_TOKEN` (or the key set in `gitlab-token-rotate/env-name`) with the new token value, then deletes pods that reference the secret so they restart and pick it up.
 
 ```yaml
 apiVersion: v1
