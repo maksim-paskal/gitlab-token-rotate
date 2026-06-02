@@ -2,6 +2,10 @@
 
 A Kubernetes controller that automatically rotates GitLab personal access tokens stored in Kubernetes Secrets. It calls the GitLab API to rotate the token before it expires and writes the new token back to the secret, keeping downstream workloads continuously authenticated.
 
+## Background
+
+GitLab [deprecated non-expiring access tokens in 15.4](https://docs.gitlab.com/ee/update/deprecations.html#non-expiring-access-tokens) and began enforcing a 365-day maximum lifetime in 16.x. On May 17, 2024 the enforcement reached GitLab.com, causing [widespread authentication failures](https://gitlab.com/gitlab-com/gl-infra/production/-/issues/18010) for teams that had not updated their automation.
+
 ## How it works
 
 The controller watches all secrets in a configured namespace (or cluster-wide). Secrets opted in via annotation are checked on a cron schedule. When a secret is due for rotation the controller:
