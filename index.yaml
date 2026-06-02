@@ -1,0 +1,16 @@
+apiVersion: v1
+entries:
+  gitlab-token-rotate:
+  - apiVersion: v2
+    created: "2026-06-02T15:38:08.571304459Z"
+    description: Automatic GitLab Token Rotation for Kubernetes
+    digest: faf4971f8f8b5a7de2cdd7f06c8e3a18a2dc91da9f758d6a9637f1d6819ad2f8
+    icon: https://helm.sh/img/helm.svg
+    maintainers:
+    - email: paskal.maksim@gmail.com
+      name: maksim-paskal
+    name: gitlab-token-rotate
+    urls:
+    - https://github.com/maksim-paskal/gitlab-token-rotate/releases/download/helm-chart-0.0.2/gitlab-token-rotate-0.0.2.tgz
+    version: 0.0.2
+generated: "2026-06-02T15:38:08.571314834Z"
