@@ -24,3 +24,6 @@ add-examples:
 
 clean:
 	kubectl delete -f ./example
+
+lint:
+	ct lint --all

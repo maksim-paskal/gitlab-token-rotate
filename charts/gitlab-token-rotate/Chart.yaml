@@ -1,4 +1,8 @@
 apiVersion: v2
 icon: https://helm.sh/img/helm.svg
 name: gitlab-token-rotate
-version: 0.0.1
+version: 0.0.2
+description: Automatic GitLab Token Rotation for Kubernetes
+maintainers:
+- name: maksim-paskal  # Maksim Paskal
+  email: paskal.maksim@gmail.com
