@@ -30,7 +30,8 @@ metadata:
   annotations:
     gitlab-token-rotate/enabled: "true"
     gitlab-token-rotate/gitlab-endpoint: https://gitlab.example.com/api/v4
-    gitlab-token-rotate/token: glpat-xxxxxxxxxxxxxxxxxxxx
+    # token must have self_rotate scope, will be rotated within 1m
+    gitlab-token-rotate/init-token: glpat-xxxxxxxxxxxxxxxxxxxx
     gitlab-token-rotate/login: user.login
     gitlab-token-rotate/registry: registry.gitlab.example.com
 data:
@@ -50,7 +51,8 @@ metadata:
   annotations:
     gitlab-token-rotate/enabled: "true"
     gitlab-token-rotate/gitlab-endpoint: https://gitlab.example.com/api/v4
-    gitlab-token-rotate/token: glpat-xxxxxxxxxxxxxxxxxxxx
+    # token must have self_rotate scope, will be rotated within 1m
+    gitlab-token-rotate/init-token: glpat-xxxxxxxxxxxxxxxxxxxx
 data:
   GITLAB_TOKEN: <base64-encoded-token>
 ```
@@ -87,7 +89,7 @@ data:
 
 ## Bootstrap flow
 
-On first use, set `init-token` to a valid token with `rotate_personal_access_token` permission. The controller will rotate it on the first scheduled run and store the new token in `token`. Subsequent rotations read from `token` only.
+On first use, set `init-token` to a valid token with the `self_rotate` scope. The controller will rotate it on the first scheduled run and store the new token in `token`. Subsequent rotations read from `token` only.
 
 ```yaml
 annotations:
